@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>E2E Studio</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script>
+      // Chạy TRƯỚC khi trang vẽ. Chờ app.js (module, luôn chạy sau khi dựng xong DOM)
+      // thì người dùng để chế độ tối sẽ thấy trang loé trắng một nhịp rồi mới tối lại.
+      try {
+        // Khoá "theme" là của báo cáo Playwright (cùng origin, giá trị dark-mode/light-mode) — console dùng khoá riêng.
+        var legacy = localStorage.getItem("theme");
+        if (legacy === "light" || legacy === "dark") {
+          localStorage.setItem("console-theme", legacy);
+          localStorage.setItem("theme", legacy + "-mode");
+        }
+        var saved = localStorage.getItem("console-theme");
+        if (saved === "light" || saved === "dark") document.documentElement.dataset.theme = saved;
+        var w = Number(localStorage.getItem("sidebar-w"));
+        if (w >= 200 && w <= 560) document.documentElement.style.setProperty("--sidebar-user-w", w + "px");
+      } catch (e) {
+        /* trình duyệt chặn lưu trữ thì cứ theo hệ điều hành */
+      }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232563eb%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237c3aed%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%2216%22%20y%3D%2216%22%20width%3D%22224%22%20height%3D%22224%22%20rx%3D%2252%22%20fill%3D%22url(%23g)%22%2F%3E%3Cpath%20d%3D%22M100%2060h56v12h-8v46l44%2074a14%2014%200%200%201-12%2021H76a14%2014%200%200%201-12-21l44-74V72h-8z%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M84%20162h88l18%2030H66z%22%20fill%3D%22%23fff%22%20opacity%3D%22.9%22%2F%3E%3Ccircle%20cx%3D%22118%22%20cy%3D%22148%22%20r%3D%227%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%22142%22%20cy%3D%22136%22%20r%3D%225%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-head">
+          <a class="brand" href="#overview">
+            <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 256 256"><defs><linearGradient id="brand-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs><rect x="16" y="16" width="224" height="224" rx="52" fill="url(#brand-g)"/><path d="M100 60h56v12h-8v46l44 74a14 14 0 0 1-12 21H76a14 14 0 0 1-12-21l44-74V72h-8z" fill="none" stroke="#fff" stroke-width="12" stroke-linejoin="round"/><path d="M84 162h88l18 30H66z" fill="#fff" opacity=".9"/><circle cx="118" cy="148" r="7" fill="#fff"/><circle cx="142" cy="136" r="5" fill="#fff"/></svg></span>
+            <span class="brand-name">E2E Studio</span>
+          </a>
+        </div>
+
+        <div class="sidebar-resizer" id="sidebar-resizer" title="Drag to resize · double-click to reset"></div>
+
+        <!-- Menu + chân sidebar nằm trong một tấm bo góc, cùng kiểu tấm nội dung bên phải. -->
+        <div class="sidebar-panel">
+        <nav class="nav" id="nav" aria-label="Main navigation"></nav>
+
+        <div class="sidebar-foot">
+          <button type="button" class="icon-btn foot-btn project-switch" id="project-switch" title="Switch project" aria-label="Switch project" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l5 4-5 4M20 12H9"/></svg>
+          </button>
+          <button type="button" class="icon-btn foot-btn" id="theme-btn" aria-haspopup="menu" title="Theme" aria-label="Theme"></button>
+          <button type="button" class="icon-btn foot-btn lang-btn" id="lang-btn" aria-haspopup="menu" title="Language" aria-label="Language">EN</button>
+          <button type="button" class="icon-btn foot-btn nav-toggle" id="nav-toggle" title="Collapse / expand menu" aria-label="Collapse menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+          </button>
+        </div>
+        </div>
+      </aside>
+
+      <div class="content">
+        <div class="topbar" id="topbar">
+          <div class="global-search" id="gsearch" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-owns="gsearch-results">
+            <svg class="gs-lens" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input class="gs-input" id="gsearch-input" type="search" placeholder="Search test cases, test objects" autocomplete="off" spellcheck="false" aria-label="Search test cases and test objects" />
+            <kbd class="gs-kbd" aria-hidden="true">Ctrl+P</kbd>
+            <div class="gs-results" id="gsearch-results" role="listbox" hidden></div>
+          </div>
+          <!-- App desktop: 3 nút cửa sổ tự vẽ (Windows không phủ nút lên nữa) -->
+          <div class="win-controls" id="win-controls">
+            <button type="button" class="win-btn" data-win="minimize" title="Minimize" aria-label="Minimize"><svg viewBox="0 0 10 10"><path d="M0 5h10"/></svg></button>
+            <button type="button" class="win-btn" data-win="maximize" title="Maximize" aria-label="Maximize"><svg class="win-ico-max" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9"/></svg><svg class="win-ico-restore" viewBox="0 0 10 10"><path d="M2.5 2.5V0.5h7v7h-2"/><rect x="0.5" y="2.5" width="7" height="7"/></svg></button>
+            <button type="button" class="win-btn win-close" data-win="close" title="Close" aria-label="Close"><svg viewBox="0 0 10 10"><path d="M0 0l10 10M10 0L0 10"/></svg></button>
+          </div>
+        </div>
+        <div class="tabbar" id="tabbar" role="tablist" aria-label="Open tabs"></div>
+        <main id="view"></main>
+      </div>
+    </div>
+
+    <!-- Nhật ký lần chạy, cập nhật trực tiếp -->
+    <div class="drawer-backdrop" id="logbox" hidden>
+      <section class="drawer drawer-wide" role="dialog" aria-label="Run log">
+        <header class="drawer-head">
+          <h2 id="logbox-title">Log</h2>
+          <div class="drawer-head-actions">
+            <!-- Đang chạy thì đây là "đang chạy" + nút Dừng; xong thì nút Dừng biến mất,
+                 chỉ còn nhãn kết quả — người dùng biết đã xong mà không phải đợi toast. -->
+            <span class="chip chip-info chip-run" id="log-status" aria-live="polite">running</span>
+            <button class="btn btn-ghost" id="log-copy" title="Copy the whole log to the clipboard">Copy log</button>
+            <button class="btn btn-danger" id="log-stop" hidden>Stop</button>
+            <button class="btn btn-ghost" data-close-log>Close</button>
+          </div>
+        </header>
+        <div class="drawer-body">
+          <pre class="log" id="log-output"></pre>
+        </div>
+      </section>
+    </div>
+
+    <div class="toasts" id="toasts"></div>
+
+    <!-- Mô hình test object dùng chung với engine (e2e/shared/keyword/object-model.cjs) → window.ObjectModel -->
+    <script src="/object-model.js"></script>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

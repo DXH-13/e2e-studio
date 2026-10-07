@@ -1,0 +1,1714 @@
+{
+  "_doc": "KEYWORD catalog for no-code test cases — the akaAT Studio WEB keyword set (docs 5.1 Web Keywords; Core/Control/API/Random come later) plus a few extra helpers. ONE single source: the runner (shared/keyword/engine.ts) looks up how to execute by `id`, the console builds the input fields from `args`. To add a keyword, add a block here THEN write a handler with the same `id` in engine.ts — if the handler is missing, the runner reports it as soon as the test case is loaded.",
+  "_doc_args": "Each argument: name (key in call.args), label (text shown on the console), type (text|number|select|multiline), required, placeholder, options (for select). `object: true` means the keyword needs a test object; `object: 'optional'` means it may take one; `returns: true` means the keyword produces a value: the console shows an Output variable field and the value is stored in ${var:<output>}.",
+  "_doc_placeholder": "Argument values may embed: ${data:key} taken from the suite's Test data, ${var:name} taken from a variable produced by a keyword (Output variable), ${global:name} taken from the project's Global variables, ${env:NAME} taken from the environment's .env file.",
+  "_doc_object_types": "Test object names must start with the prefix of their element type (btn_dat_mua, input_sdt, label_tieu_de). The console dialog adds it, the recorder infers it from the element, and the server rejects names without a known prefix.",
+  "objectTypes": [
+    {
+      "prefix": "btn",
+      "label": "Button"
+    },
+    {
+      "prefix": "input",
+      "label": "Input (text box, date, number)"
+    },
+    {
+      "prefix": "label",
+      "label": "Label / text"
+    },
+    {
+      "prefix": "link",
+      "label": "Link"
+    },
+    {
+      "prefix": "chk",
+      "label": "Checkbox"
+    },
+    {
+      "prefix": "radio",
+      "label": "Radio"
+    },
+    {
+      "prefix": "select",
+      "label": "Dropdown / picker"
+    },
+    {
+      "prefix": "item",
+      "label": "List item / option"
+    },
+    {
+      "prefix": "list",
+      "label": "List"
+    },
+    {
+      "prefix": "card",
+      "label": "Card"
+    },
+    {
+      "prefix": "img",
+      "label": "Image"
+    },
+    {
+      "prefix": "icon",
+      "label": "Icon"
+    },
+    {
+      "prefix": "dialog",
+      "label": "Dialog / sheet"
+    },
+    {
+      "prefix": "tab",
+      "label": "Tab"
+    },
+    {
+      "prefix": "table",
+      "label": "Table"
+    },
+    {
+      "prefix": "frame",
+      "label": "Iframe"
+    },
+    {
+      "prefix": "elm",
+      "label": "Other element"
+    }
+  ],
+  "groups": [
+    {
+      "id": "browser",
+      "label": "Web · Browser"
+    },
+    {
+      "id": "window",
+      "label": "Web · Window"
+    },
+    {
+      "id": "element",
+      "label": "Web · Element"
+    },
+    {
+      "id": "input",
+      "label": "Web · Text & form"
+    },
+    {
+      "id": "get",
+      "label": "Web · Data retrieval"
+    },
+    {
+      "id": "select",
+      "label": "Web · Select"
+    },
+    {
+      "id": "alert",
+      "label": "Web · Alert"
+    },
+    {
+      "id": "frame",
+      "label": "Web · Frame"
+    },
+    {
+      "id": "verifyElement",
+      "label": "Web · Verify element"
+    },
+    {
+      "id": "verifyOption",
+      "label": "Web · Verify option"
+    },
+    {
+      "id": "wait",
+      "label": "Web · Wait"
+    },
+    {
+      "id": "js",
+      "label": "Web · JavaScript"
+    },
+    {
+      "id": "other",
+      "label": "Core"
+    }
+  ],
+  "keywords": [
+    {
+      "id": "openBrowser",
+      "group": "browser",
+      "label": "Open Browser",
+      "summary": "Open a page at the given URL (a full URL, or a path of the app already open).",
+      "object": false,
+      "args": [
+        {
+          "name": "url",
+          "label": "URL",
+          "type": "text",
+          "required": true,
+          "placeholder": "https://…"
+        }
+      ]
+    },
+    {
+      "id": "navigateToUrl",
+      "group": "browser",
+      "label": "Navigate To URL",
+      "summary": "Go from the current page to the given URL/path, keeping the current session.",
+      "object": false,
+      "args": [
+        {
+          "name": "url",
+          "label": "URL or path",
+          "type": "text",
+          "required": true,
+          "placeholder": "/orders"
+        }
+      ]
+    },
+    {
+      "id": "refresh",
+      "group": "browser",
+      "label": "Refresh",
+      "summary": "Reload the current page — used to check whether the session survives a reload.",
+      "object": false,
+      "args": []
+    },
+    {
+      "id": "back",
+      "group": "browser",
+      "label": "Back",
+      "summary": "The browser's Back button.",
+      "object": false,
+      "args": []
+    },
+    {
+      "id": "forward",
+      "group": "browser",
+      "label": "Forward",
+      "summary": "The browser's Forward button.",
+      "object": false,
+      "args": []
+    },
+    {
+      "id": "deleteAllCookies",
+      "group": "browser",
+      "label": "Delete All Cookies",
+      "summary": "Delete every cookie of the browser session.",
+      "object": false,
+      "args": []
+    },
+    {
+      "id": "clearBrowserSession",
+      "group": "browser",
+      "label": "Clear Browser Session",
+      "summary": "Log out by wiping the session: cookies plus localStorage and sessionStorage of the open page, then open the URL (or reload).",
+      "detail": "Use it to switch role inside one test case: Clear Browser Session → log in as the next user. Storage is cleared for the site that is open at that moment.",
+      "object": false,
+      "args": [
+        {
+          "name": "url",
+          "label": "URL to open afterwards",
+          "type": "text",
+          "required": false,
+          "placeholder": "${global:web_url} — blank = reload the page"
+        }
+      ]
+    },
+    {
+      "id": "openNewTab",
+      "group": "window",
+      "label": "Open New Tab",
+      "summary": "Open a new tab at the URL and make it the current window.",
+      "object": false,
+      "args": [
+        {
+          "name": "url",
+          "label": "URL",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "closeCurrentWindow",
+      "group": "window",
+      "label": "Close Current Window",
+      "summary": "Close the current tab and switch back to the first remaining one.",
+      "object": false,
+      "args": []
+    },
+    {
+      "id": "getCurrentWindowTitle",
+      "group": "window",
+      "label": "Get Current Window Title",
+      "summary": "Store the current page title into the output variable.",
+      "object": false,
+      "returns": true,
+      "args": []
+    },
+    {
+      "id": "getCurrentWindowUrl",
+      "group": "window",
+      "label": "Get Current Window URL",
+      "summary": "Store the current page URL into the output variable.",
+      "object": false,
+      "returns": true,
+      "args": []
+    },
+    {
+      "id": "getWindowCount",
+      "group": "window",
+      "label": "Get Window Count",
+      "summary": "Store the number of open tabs into the output variable.",
+      "object": false,
+      "returns": true,
+      "args": []
+    },
+    {
+      "id": "switchToWindowByTitle",
+      "group": "window",
+      "label": "Switch To Window By Title",
+      "summary": "Make the tab whose title contains the text the current window.",
+      "object": false,
+      "args": [
+        {
+          "name": "title",
+          "label": "Title contains",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "switchToWindowByUrl",
+      "group": "window",
+      "label": "Switch To Window By URL",
+      "summary": "Make the tab whose URL contains the text the current window.",
+      "object": false,
+      "args": [
+        {
+          "name": "url",
+          "label": "URL contains",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "click",
+      "group": "element",
+      "label": "Click",
+      "summary": "Click the test object.",
+      "detail": "Waits for the test object to be visible and clickable before clicking, so no extra wait step is needed beforehand.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "doubleClick",
+      "group": "element",
+      "label": "Double Click",
+      "summary": "Double-click the test object.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "rightClick",
+      "group": "element",
+      "label": "Right Click",
+      "summary": "Right-click the test object.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "clickWithJavascript",
+      "group": "element",
+      "label": "Click With Javascript",
+      "summary": "Click the test object through JavaScript (bypasses overlays that intercept the pointer).",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "clickAndDownload",
+      "group": "element",
+      "label": "Click And Download",
+      "summary": "Click the test object, wait for the browser download to finish, and store the downloaded file name.",
+      "detail": "Fails when no download starts or the file is empty. Check the name afterwards with Verify Variable (equals / contains).",
+      "object": true,
+      "returns": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "30"
+        }
+      ]
+    },
+    {
+      "id": "mouseOver",
+      "group": "element",
+      "label": "Mouse Over",
+      "summary": "Hover the mouse over the test object.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "sendKeys",
+      "group": "element",
+      "label": "Send Keys",
+      "summary": "Type the keys into the test object. On an input or textarea the current value is replaced; elsewhere the keys are pressed one by one.",
+      "object": true,
+      "args": [
+        {
+          "name": "keys",
+          "label": "Keys",
+          "type": "text",
+          "required": true,
+          "placeholder": "hello@example.com or ${data:email}"
+        }
+      ]
+    },
+    {
+      "id": "sendSpecialKeyboardCharacter",
+      "group": "element",
+      "label": "Send Special Keyboard Character",
+      "summary": "Press a special key (Enter, Escape, Tab, ArrowDown…) on the test object, or on the page when no object is selected.",
+      "object": "optional",
+      "args": [
+        {
+          "name": "key",
+          "label": "Key",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "Enter",
+              "label": "Enter"
+            },
+            {
+              "value": "Escape",
+              "label": "Escape"
+            },
+            {
+              "value": "Tab",
+              "label": "Tab"
+            },
+            {
+              "value": "Backspace",
+              "label": "Backspace"
+            },
+            {
+              "value": "Delete",
+              "label": "Delete"
+            },
+            {
+              "value": "ArrowUp",
+              "label": "ArrowUp"
+            },
+            {
+              "value": "ArrowDown",
+              "label": "ArrowDown"
+            },
+            {
+              "value": "ArrowLeft",
+              "label": "ArrowLeft"
+            },
+            {
+              "value": "ArrowRight",
+              "label": "ArrowRight"
+            },
+            {
+              "value": "Home",
+              "label": "Home"
+            },
+            {
+              "value": "End",
+              "label": "End"
+            },
+            {
+              "value": "PageUp",
+              "label": "PageUp"
+            },
+            {
+              "value": "PageDown",
+              "label": "PageDown"
+            },
+            {
+              "value": "Space",
+              "label": "Space"
+            },
+            {
+              "value": "F5",
+              "label": "F5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dragAndDropByOffset",
+      "group": "element",
+      "label": "Drag And Drop By Offset",
+      "summary": "Drag the test object and drop it at an offset (pixels).",
+      "object": true,
+      "args": [
+        {
+          "name": "xOffset",
+          "label": "X offset",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "yOffset",
+          "label": "Y offset",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "dragAndDropToElement",
+      "group": "element",
+      "label": "Drag And Drop To Element",
+      "summary": "Drag the test object and drop it onto another test object.",
+      "object": true,
+      "args": [
+        {
+          "name": "destination",
+          "label": "Destination test object",
+          "type": "text",
+          "required": true,
+          "placeholder": "Screen/drop_zone"
+        }
+      ]
+    },
+    {
+      "id": "scrollToElement",
+      "group": "element",
+      "label": "Scroll To Element",
+      "summary": "Scroll until the test object is within the viewport.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "clickIfPresent",
+      "group": "element",
+      "label": "Click If Present",
+      "summary": "Click when the test object is present; if it is not, skip without reporting an error.",
+      "detail": "For things that come and go — a rating prompt, a promo banner. Do not use it instead of \"Click\" for a mandatory step.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeoutMs",
+          "label": "Max wait (ms)",
+          "type": "number",
+          "required": false,
+          "placeholder": "3000"
+        }
+      ]
+    },
+    {
+      "id": "scrollToBottom",
+      "group": "element",
+      "label": "Scroll To Bottom",
+      "summary": "Scroll to the end of the content area — used to trigger lazy-loading.",
+      "object": "optional",
+      "args": []
+    },
+    {
+      "id": "clearText",
+      "group": "input",
+      "label": "Clear Text",
+      "summary": "Leave the input empty — usually used to check whether a button becomes disabled again.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "uploadFile",
+      "group": "input",
+      "label": "Upload File",
+      "summary": "Attach files to a file input or an upload area.",
+      "detail": "The test object can be the <input type=\"file\"> (hidden is fine), an element that contains one, or a button/drop zone that opens the file picker. Relative paths are read from e2e/testdata/files/; separate several files with \";\".",
+      "object": true,
+      "args": [
+        {
+          "name": "filePath",
+          "label": "File path",
+          "type": "text",
+          "required": true,
+          "placeholder": "sample.pdf or sample.pdf; appendix.pdf"
+        }
+      ]
+    },
+    {
+      "id": "submit",
+      "group": "input",
+      "label": "Submit",
+      "summary": "Submit the form that contains the test object.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "setAttribute",
+      "group": "input",
+      "label": "Set Attribute",
+      "summary": "Set an attribute on the test object.",
+      "object": true,
+      "args": [
+        {
+          "name": "attributeName",
+          "label": "Attribute name",
+          "type": "text",
+          "required": true,
+          "placeholder": "href"
+        },
+        {
+          "name": "attributeValue",
+          "label": "Attribute value",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "setCssAttribute",
+      "group": "input",
+      "label": "Set CSS Attribute",
+      "summary": "Set a CSS property on the test object.",
+      "object": true,
+      "args": [
+        {
+          "name": "attributeName",
+          "label": "CSS property",
+          "type": "text",
+          "required": true,
+          "placeholder": "display"
+        },
+        {
+          "name": "attributeValue",
+          "label": "Value",
+          "type": "text",
+          "required": true,
+          "placeholder": "none"
+        }
+      ]
+    },
+    {
+      "id": "getText",
+      "group": "get",
+      "label": "Get Text",
+      "summary": "Store the test object's visible text into the output variable.",
+      "detail": "Used to bridge two screens: take the order code on the list screen, then verify the same code on the detail screen.",
+      "object": true,
+      "returns": true,
+      "args": []
+    },
+    {
+      "id": "getTextFromMultipleElements",
+      "group": "get",
+      "label": "Get Text From Multiple Elements",
+      "summary": "Store the texts of every element matching the test object into the output variable (JSON array).",
+      "object": true,
+      "returns": true,
+      "args": []
+    },
+    {
+      "id": "getAttributeValue",
+      "group": "get",
+      "label": "Get Attribute Value",
+      "summary": "Store the test object's attribute value into the output variable.",
+      "object": true,
+      "returns": true,
+      "args": [
+        {
+          "name": "attributeName",
+          "label": "Attribute name",
+          "type": "text",
+          "required": true,
+          "placeholder": "href"
+        }
+      ]
+    },
+    {
+      "id": "getCssAttributeValue",
+      "group": "get",
+      "label": "Get CSS Attribute Value",
+      "summary": "Store the test object's computed CSS property into the output variable.",
+      "object": true,
+      "returns": true,
+      "args": [
+        {
+          "name": "attributeName",
+          "label": "CSS property",
+          "type": "text",
+          "required": true,
+          "placeholder": "color"
+        }
+      ]
+    },
+    {
+      "id": "selectOptionByIndex",
+      "group": "select",
+      "label": "Select Option By Index",
+      "summary": "Select the option at the position (starts at 0) of a <select>.",
+      "object": true,
+      "args": [
+        {
+          "name": "index",
+          "label": "Index",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "selectOptionByLabel",
+      "group": "select",
+      "label": "Select Option By Label",
+      "summary": "Select the option of a <select> by its visible text.",
+      "object": true,
+      "args": [
+        {
+          "name": "label",
+          "label": "Label",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "selectOptionByValue",
+      "group": "select",
+      "label": "Select Option By Value",
+      "summary": "Select the option of a <select> by its value attribute.",
+      "object": true,
+      "args": [
+        {
+          "name": "value",
+          "label": "Value",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "selectAllOptions",
+      "group": "select",
+      "label": "Select All Options",
+      "summary": "Select every option of a multiple <select>.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "deselectOptionByIndex",
+      "group": "select",
+      "label": "Deselect Option By Index",
+      "summary": "Deselect the option at the position of a multiple <select>.",
+      "object": true,
+      "args": [
+        {
+          "name": "index",
+          "label": "Index",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "deselectOptionByLabel",
+      "group": "select",
+      "label": "Deselect Option By Label",
+      "summary": "Deselect the option by its visible text.",
+      "object": true,
+      "args": [
+        {
+          "name": "label",
+          "label": "Label",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "deselectOptionByValue",
+      "group": "select",
+      "label": "Deselect Option By Value",
+      "summary": "Deselect the option by its value attribute.",
+      "object": true,
+      "args": [
+        {
+          "name": "value",
+          "label": "Value",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "deselectAllOptions",
+      "group": "select",
+      "label": "Deselect All Options",
+      "summary": "Deselect every option of a multiple <select>.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "getNumberOfOption",
+      "group": "select",
+      "label": "Get Number Of Option",
+      "summary": "Store the number of options of the <select> into the output variable.",
+      "object": true,
+      "returns": true,
+      "args": []
+    },
+    {
+      "id": "getNumberOfSelectedOption",
+      "group": "select",
+      "label": "Get Number Of Selected Option",
+      "summary": "Store the number of selected options into the output variable.",
+      "object": true,
+      "returns": true,
+      "args": []
+    },
+    {
+      "id": "selectOption",
+      "group": "select",
+      "label": "Select Item By Text",
+      "summary": "Click the item of an open sheet/list whose visible text contains the value.",
+      "detail": "For the app's custom lists (province, ward, product…) that are not <select> elements. Matching ignores case and NFC/NFD differences.",
+      "object": true,
+      "args": [
+        {
+          "name": "label",
+          "label": "Visible text",
+          "type": "text",
+          "required": true,
+          "placeholder": "Option 1"
+        }
+      ]
+    },
+    {
+      "id": "acceptAlert",
+      "group": "alert",
+      "label": "Accept Alert",
+      "summary": "Click OK on the open alert/confirm/prompt.",
+      "object": false,
+      "args": []
+    },
+    {
+      "id": "dismissAlert",
+      "group": "alert",
+      "label": "Dismiss Alert",
+      "summary": "Click Cancel on the open alert/confirm/prompt.",
+      "object": false,
+      "args": []
+    },
+    {
+      "id": "getAlertText",
+      "group": "alert",
+      "label": "Get Alert Text",
+      "summary": "Store the text of the open alert into the output variable.",
+      "object": false,
+      "returns": true,
+      "args": []
+    },
+    {
+      "id": "setTextOnAlert",
+      "group": "alert",
+      "label": "Set Text On Alert",
+      "summary": "Type the text into the open prompt and accept it.",
+      "object": false,
+      "args": [
+        {
+          "name": "text",
+          "label": "Text",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "waitForAlert",
+      "group": "alert",
+      "label": "Wait For Alert",
+      "summary": "Wait until an alert is open.",
+      "object": false,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "verifyAlertPresent",
+      "group": "alert",
+      "label": "Verify Alert Present",
+      "summary": "An alert must be open (within the timeout).",
+      "object": false,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "verifyAlertNotPresent",
+      "group": "alert",
+      "label": "Verify Alert Not Present",
+      "summary": "No alert may be open.",
+      "object": false,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "switchToFrame",
+      "group": "frame",
+      "label": "Switch To Frame",
+      "summary": "Make the iframe pointed to by the test object the current context — following keywords look inside it.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "switchToFrameByNameOrId",
+      "group": "frame",
+      "label": "Switch To Frame By Name Or ID",
+      "summary": "Make the iframe with this name/id the current context.",
+      "object": false,
+      "args": [
+        {
+          "name": "nameOrId",
+          "label": "Name or id",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "switchToDefaultContent",
+      "group": "frame",
+      "label": "Switch To Default Content",
+      "summary": "Leave the iframe and go back to the main page.",
+      "object": false,
+      "args": []
+    },
+    {
+      "id": "verifyElementPresent",
+      "group": "verifyElement",
+      "label": "Verify Element Present",
+      "summary": "The test object must exist in the DOM (visible or not).",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "verifyElementNotPresent",
+      "group": "verifyElement",
+      "label": "Verify Element Not Present",
+      "summary": "The test object must not exist in the DOM.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "verifyElementVisible",
+      "group": "verifyElement",
+      "label": "Verify Element Visible",
+      "summary": "The test object must be visible on screen.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "verifyElementNotVisible",
+      "group": "verifyElement",
+      "label": "Verify Element Not Visible",
+      "summary": "The test object must not be visible (it may still exist in the DOM).",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "verifyElementEnable",
+      "group": "verifyElement",
+      "label": "Verify Element Enable",
+      "summary": "The button/input must be enabled.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "verifyElementDisable",
+      "group": "verifyElement",
+      "label": "Verify Element Disable",
+      "summary": "The button/input must be disabled.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "verifyElementClickable",
+      "group": "verifyElement",
+      "label": "Verify Element Clickable",
+      "summary": "The test object must be visible and enabled.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "verifyElementHasAttribute",
+      "group": "verifyElement",
+      "label": "Verify Element Has Attribute",
+      "summary": "The test object must have the attribute.",
+      "object": true,
+      "args": [
+        {
+          "name": "attributeName",
+          "label": "Attribute name",
+          "type": "text",
+          "required": true,
+          "placeholder": "href"
+        }
+      ]
+    },
+    {
+      "id": "verifyElementNotHasAttribute",
+      "group": "verifyElement",
+      "label": "Verify Element Not Has Attribute",
+      "summary": "The test object must not have the attribute.",
+      "object": true,
+      "args": [
+        {
+          "name": "attributeName",
+          "label": "Attribute name",
+          "type": "text",
+          "required": true,
+          "placeholder": "href"
+        }
+      ]
+    },
+    {
+      "id": "verifyElementAttributeValue",
+      "group": "verifyElement",
+      "label": "Verify Element Attribute Value",
+      "summary": "The attribute of the test object must equal the expected value.",
+      "object": true,
+      "args": [
+        {
+          "name": "attributeName",
+          "label": "Attribute name",
+          "type": "text",
+          "required": true,
+          "placeholder": "href"
+        },
+        {
+          "name": "expectedValue",
+          "label": "Expected value",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyElementAttributeValueByRegex",
+      "group": "verifyElement",
+      "label": "Verify Element Attribute Value By Regex",
+      "summary": "The attribute of the test object must match the regex.",
+      "object": true,
+      "args": [
+        {
+          "name": "attributeName",
+          "label": "Attribute name",
+          "type": "text",
+          "required": true,
+          "placeholder": "href"
+        },
+        {
+          "name": "regex",
+          "label": "Regex",
+          "type": "text",
+          "required": true,
+          "placeholder": "^\\d{6}$"
+        }
+      ]
+    },
+    {
+      "id": "verifyElementAttributeValueDifferent",
+      "group": "verifyElement",
+      "label": "Verify Element Attribute Value Different",
+      "summary": "The attribute of the test object must differ from the value.",
+      "object": true,
+      "args": [
+        {
+          "name": "attributeName",
+          "label": "Attribute name",
+          "type": "text",
+          "required": true,
+          "placeholder": "href"
+        },
+        {
+          "name": "valueToAvoid",
+          "label": "Value to avoid",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyElementText",
+      "group": "verifyElement",
+      "label": "Verify Element Text",
+      "summary": "The test object's text must equal the expected text.",
+      "detail": "Both sides are NFC-normalized before matching.",
+      "object": true,
+      "args": [
+        {
+          "name": "expectedText",
+          "label": "Expected text",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "trimText",
+          "label": "Trim text",
+          "type": "select",
+          "required": false,
+          "options": [
+            {
+              "value": "true",
+              "label": "yes"
+            },
+            {
+              "value": "false",
+              "label": "no"
+            }
+          ]
+        },
+        {
+          "name": "ignoreCase",
+          "label": "Ignore case",
+          "type": "select",
+          "required": false,
+          "options": [
+            {
+              "value": "false",
+              "label": "no"
+            },
+            {
+              "value": "true",
+              "label": "yes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifyElementTextByRegex",
+      "group": "verifyElement",
+      "label": "Verify Element Text By Regex",
+      "summary": "The test object's text must match the regex.",
+      "object": true,
+      "args": [
+        {
+          "name": "regex",
+          "label": "Regex",
+          "type": "text",
+          "required": true,
+          "placeholder": "^\\d{6}$"
+        }
+      ]
+    },
+    {
+      "id": "verifyElementTextDifferentFrom",
+      "group": "verifyElement",
+      "label": "Verify Element Text Different From",
+      "summary": "The test object's text must differ from the value.",
+      "object": true,
+      "args": [
+        {
+          "name": "textToAvoid",
+          "label": "Text to avoid",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "trimText",
+          "label": "Trim text",
+          "type": "select",
+          "required": false,
+          "options": [
+            {
+              "value": "true",
+              "label": "yes"
+            },
+            {
+              "value": "false",
+              "label": "no"
+            }
+          ]
+        },
+        {
+          "name": "ignoreCase",
+          "label": "Ignore case",
+          "type": "select",
+          "required": false,
+          "options": [
+            {
+              "value": "false",
+              "label": "no"
+            },
+            {
+              "value": "true",
+              "label": "yes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifyText",
+      "group": "verifyElement",
+      "label": "Verify Text Present",
+      "summary": "The text must appear — inside the test object if one is selected, otherwise anywhere on the page.",
+      "detail": "Both sides are NFC-normalized before matching, so hand-typed Vietnamese text does not fail unfairly.",
+      "object": "optional",
+      "args": [
+        {
+          "name": "text",
+          "label": "Text to see",
+          "type": "text",
+          "required": true,
+          "placeholder": "Saved successfully"
+        }
+      ]
+    },
+    {
+      "id": "verifyTextAbsent",
+      "group": "verifyElement",
+      "label": "Verify Text Not Present",
+      "summary": "The text must not appear on the page.",
+      "object": "optional",
+      "args": [
+        {
+          "name": "text",
+          "label": "Text that must not appear",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyValue",
+      "group": "verifyElement",
+      "label": "Verify Input Value",
+      "summary": "The input must currently hold exactly this value.",
+      "object": true,
+      "args": [
+        {
+          "name": "value",
+          "label": "Expected value",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyEmpty",
+      "group": "verifyElement",
+      "label": "Verify Input Empty",
+      "summary": "The input must currently be empty.",
+      "object": true,
+      "args": []
+    },
+    {
+      "id": "verifyCount",
+      "group": "verifyElement",
+      "label": "Verify Element Count",
+      "summary": "The number of elements matching the test object must equal exactly this number.",
+      "object": true,
+      "args": [
+        {
+          "name": "count",
+          "label": "Expected count",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyUrl",
+      "group": "verifyElement",
+      "label": "Verify URL Contains",
+      "summary": "The current URL must contain this fragment.",
+      "object": false,
+      "args": [
+        {
+          "name": "contains",
+          "label": "URL must contain",
+          "type": "text",
+          "required": true,
+          "placeholder": "/orders"
+        }
+      ]
+    },
+    {
+      "id": "verifyOptionPresentByLabel",
+      "group": "verifyOption",
+      "label": "Verify Option Present By Label",
+      "summary": "The <select> must contain an option with this visible text.",
+      "object": true,
+      "args": [
+        {
+          "name": "label",
+          "label": "Label",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyOptionPresentByValue",
+      "group": "verifyOption",
+      "label": "Verify Option Present By Value",
+      "summary": "The <select> must contain an option with this value.",
+      "object": true,
+      "args": [
+        {
+          "name": "value",
+          "label": "Value",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyOptionSelectedByIndex",
+      "group": "verifyOption",
+      "label": "Verify Option Selected By Index",
+      "summary": "The option at the position must be selected.",
+      "object": true,
+      "args": [
+        {
+          "name": "index",
+          "label": "Index",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyOptionSelectedByLabel",
+      "group": "verifyOption",
+      "label": "Verify Option Selected By Label",
+      "summary": "The option with this visible text must be selected.",
+      "object": true,
+      "args": [
+        {
+          "name": "label",
+          "label": "Label",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyOptionSelectedByValue",
+      "group": "verifyOption",
+      "label": "Verify Option Selected By Value",
+      "summary": "The option with this value must be selected.",
+      "object": true,
+      "args": [
+        {
+          "name": "value",
+          "label": "Value",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyOptionDeselectedByIndex",
+      "group": "verifyOption",
+      "label": "Verify Option Deselected By Index",
+      "summary": "The option at the position must not be selected.",
+      "object": true,
+      "args": [
+        {
+          "name": "index",
+          "label": "Index",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyOptionDeselectedByLabel",
+      "group": "verifyOption",
+      "label": "Verify Option Deselected By Label",
+      "summary": "The option with this visible text must not be selected.",
+      "object": true,
+      "args": [
+        {
+          "name": "label",
+          "label": "Label",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "verifyOptionDeselectedByValue",
+      "group": "verifyOption",
+      "label": "Verify Option Deselected By Value",
+      "summary": "The option with this value must not be selected.",
+      "object": true,
+      "args": [
+        {
+          "name": "value",
+          "label": "Value",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "waitForElementPresent",
+      "group": "wait",
+      "label": "Wait For Element Present",
+      "summary": "Wait until the test object exists in the DOM.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "waitForElementNotPresent",
+      "group": "wait",
+      "label": "Wait For Element Not Present",
+      "summary": "Wait until the test object no longer exists in the DOM.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "waitForElementVisible",
+      "group": "wait",
+      "label": "Wait For Element Visible",
+      "summary": "Wait until the test object is visible.",
+      "detail": "In most cases NOT needed: the interaction keywords already wait on their own.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "waitForElementNotVisible",
+      "group": "wait",
+      "label": "Wait For Element Not Visible",
+      "summary": "Wait until the test object is hidden — e.g. a loading screen disappearing.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "waitForElementEnabled",
+      "group": "wait",
+      "label": "Wait For Element Enabled",
+      "summary": "Wait until the test object is enabled.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "waitForElementDisabled",
+      "group": "wait",
+      "label": "Wait For Element Disabled",
+      "summary": "Wait until the test object is disabled.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "waitForElementClickable",
+      "group": "wait",
+      "label": "Wait For Element Clickable",
+      "summary": "Wait until the test object is visible and enabled.",
+      "object": true,
+      "args": [
+        {
+          "name": "timeout",
+          "label": "Timeout (seconds)",
+          "type": "number",
+          "required": false,
+          "placeholder": "10"
+        }
+      ]
+    },
+    {
+      "id": "waitText",
+      "group": "wait",
+      "label": "Wait For Text",
+      "summary": "Wait until the text appears on the page.",
+      "object": false,
+      "args": [
+        {
+          "name": "text",
+          "label": "Text to wait for",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "timeoutMs",
+          "label": "Max wait (ms)",
+          "type": "number",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "executeJavascript",
+      "group": "js",
+      "label": "Execute Javascript",
+      "summary": "Run JavaScript in the page; the returned value goes to the output variable.",
+      "object": false,
+      "returns": true,
+      "args": [
+        {
+          "name": "script",
+          "label": "JavaScript",
+          "type": "multiline",
+          "required": true,
+          "placeholder": "return document.title"
+        }
+      ]
+    },
+    {
+      "id": "delay",
+      "group": "other",
+      "label": "Wait",
+      "summary": "Pause for a fixed number of milliseconds.",
+      "detail": "Use sparingly: hard waits make test cases both slow and flaky. Prefer \"Wait For Element Visible\".",
+      "object": false,
+      "args": [
+        {
+          "name": "ms",
+          "label": "Milliseconds",
+          "type": "number",
+          "required": true,
+          "placeholder": "1000"
+        }
+      ]
+    },
+    {
+      "id": "setVariable",
+      "group": "other",
+      "label": "Set Variable Value",
+      "summary": "Assign a value to a variable so later steps can reuse it via ${var:name}.",
+      "object": false,
+      "args": [
+        {
+          "name": "name",
+          "label": "Variable name",
+          "type": "text",
+          "required": true,
+          "placeholder": "orderId"
+        },
+        {
+          "name": "value",
+          "label": "Value",
+          "type": "text",
+          "required": true,
+          "placeholder": "${data:productCode}"
+        }
+      ]
+    },
+    {
+      "id": "generateUniqueCode",
+      "group": "other",
+      "label": "Generate Unique Code",
+      "summary": "Produce a code unique to this run (prefix-yyMMdd-HHmmss-xxx) — tag the data a test case creates so Tear down can find and clean exactly that data.",
+      "object": false,
+      "returns": true,
+      "args": [
+        {
+          "name": "prefix",
+          "label": "Prefix",
+          "type": "text",
+          "required": false,
+          "placeholder": "TC-001"
+        }
+      ]
+    },
+    {
+      "id": "getDate",
+      "group": "other",
+      "label": "Get Date",
+      "summary": "Store today plus/minus N days (Vietnam time) in the given format — e.g. a deadline of today + 10 or a date already past.",
+      "object": false,
+      "returns": true,
+      "args": [
+        {
+          "name": "offsetDays",
+          "label": "Days from today",
+          "type": "number",
+          "required": false,
+          "placeholder": "0 · 10 · -1"
+        },
+        {
+          "name": "format",
+          "label": "Format",
+          "type": "text",
+          "required": false,
+          "placeholder": "dd/MM/yyyy (also yyyy-MM-dd, HH:mm…)"
+        }
+      ]
+    },
+    {
+      "id": "verifyVariable",
+      "group": "other",
+      "label": "Verify Variable",
+      "summary": "Compare a captured variable with an expected value.",
+      "object": false,
+      "args": [
+        {
+          "name": "name",
+          "label": "Variable name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "op",
+          "label": "Comparison",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "equals",
+              "label": "equals"
+            },
+            {
+              "value": "contains",
+              "label": "contains"
+            },
+            {
+              "value": "notEmpty",
+              "label": "not empty"
+            }
+          ]
+        },
+        {
+          "name": "value",
+          "label": "Expected value",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "screenshot",
+      "group": "other",
+      "label": "Take Screenshot",
+      "summary": "Attach a screenshot to this step's report.",
+      "object": false,
+      "args": [
+        {
+          "name": "name",
+          "label": "Image name",
+          "type": "text",
+          "required": false,
+          "placeholder": "checkout-page"
+        }
+      ]
+    },
+    {
+      "id": "comment",
+      "group": "other",
+      "label": "Comment",
+      "summary": "Does nothing — only splits the test case into blocks for the reader.",
+      "object": false,
+      "args": [
+        {
+          "name": "text",
+          "label": "Content",
+          "type": "multiline",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

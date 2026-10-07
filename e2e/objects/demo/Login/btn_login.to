@@ -1,0 +1,14 @@
+{
+  "name": "Login button",
+  "method": "css",
+  "properties": [
+    { "name": "tag", "condition": "equals", "value": "button", "detect": true },
+    { "name": "type", "condition": "equals", "value": "submit", "detect": true }
+  ],
+  "xpaths": [{ "type": "xpath:attributes", "value": "//button[@type='submit']" }],
+  "selectedXPath": 0,
+  "css": "button[type=\"submit\"]",
+  "role": null,
+  "kind": "button",
+  "screen": "Login"
+}

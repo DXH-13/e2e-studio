@@ -1,0 +1,19 @@
+{
+  "name": "e2e-studio-console",
+  "version": "1.0.0",
+  "description": "Console quản lý test case, lập lịch chạy và xem báo cáo cho bộ test e2e không cần code — dữ liệu lưu SQLite (node:sqlite, không dependency)",
+  "private": true,
+  "type": "module",
+  "license": "ISC",
+  "scripts": {
+    "start": "node server/index.mjs",
+    "dev": "node --watch server/index.mjs",
+    "check:contrast": "node tools/check-contrast.mjs",
+    "app": "npm --prefix desktop start",
+    "app:install": "npm --prefix desktop install",
+    "app:build": "npm --prefix desktop run build:win"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

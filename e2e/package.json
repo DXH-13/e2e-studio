@@ -1,0 +1,20 @@
+{
+  "name": "e2e-studio-runner",
+  "version": "1.0.0",
+  "description": "Bộ chạy test e2e không cần code của e2e-studio (Playwright + keyword)",
+  "private": true,
+  "type": "commonjs",
+  "license": "ISC",
+  "scripts": {
+    "test": "node bin/run.mjs",
+    "list": "node bin/run.mjs --list",
+    "typecheck": "tsc --noEmit",
+    "report:open": "node tools/open-report.mjs",
+    "console": "npm --prefix ../console start"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.2.0",
+    "typescript": "^7.0.2"
+  }
+}

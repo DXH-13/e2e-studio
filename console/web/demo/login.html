@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login — Demo app</title>
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <main>
+      <h2>Login Page</h2>
+      <p>Use <strong>tomsmith</strong> / <strong>SuperSecretPassword!</strong></p>
+      <div id="flash" class="flash" hidden></div>
+      <form id="login">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" />
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+        <button type="submit">Login</button>
+      </form>
+    </main>
+    <script>
+      document.getElementById('login').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const user = document.getElementById('username').value;
+        const pass = document.getElementById('password').value;
+        if (user === 'tomsmith' && pass === 'SuperSecretPassword!') {
+          location.href = 'secure.html';
+          return;
+        }
+        const flash = document.getElementById('flash');
+        flash.textContent = user === 'tomsmith' ? 'Your password is invalid!' : 'Your username is invalid!';
+        flash.hidden = false;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "e2e-studio-desktop",
+  "version": "1.0.0",
+  "description": "Vỏ Electron cho E2E Studio — bọc server Node (console/server) trong cửa sổ Windows",
+  "private": true,
+  "type": "module",
+  "main": "main.mjs",
+  "license": "ISC",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "node tools/ensure-electron.mjs",
+    "build:win": "node tools/build-win.mjs"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "electron": "^38.1.0"
+  }
+}

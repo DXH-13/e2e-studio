@@ -1,0 +1,25 @@
+# Thư viện
+node_modules/
+
+# Dữ liệu chạy của console: database SQLite, log, thùng rác, file tạm của recorder
+console/data/
+
+# Kết quả chạy test
+e2e/reports/*
+!e2e/reports/.gitkeep
+e2e/test-results/
+
+# Console xuất các file này từ database trước mỗi lần chạy — có thể chứa secret
+e2e/testdata/*.json
+e2e/config/env/*.env
+!e2e/config/env/*.env.example
+
+# Bản build app desktop (mặc định xuất ra %LOCALAPPDATA%\E2EStudioBuild)
+console/desktop/dist/
+*.zip
+
+# Hệ điều hành / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

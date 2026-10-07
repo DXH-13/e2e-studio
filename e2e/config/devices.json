@@ -1,0 +1,103 @@
+{
+  "_doc": "Khổ màn hình dùng khi chạy test. Chiều cao là chiều cao màn hình đầy đủ (không trừ thanh địa chỉ trình duyệt), nên không dùng thẳng preset của Playwright.",
+  "defaults": {
+    "keyword": "desktop-1440"
+  },
+  "devices": [
+    {
+      "code": "iphone-13",
+      "name": "iPhone 13 / 14",
+      "group": "Phone",
+      "width": 390,
+      "height": 844,
+      "dpr": 3,
+      "mobile": true
+    },
+    {
+      "code": "iphone-se",
+      "name": "iPhone SE (2022)",
+      "group": "Phone",
+      "width": 375,
+      "height": 667,
+      "dpr": 2,
+      "mobile": true,
+      "note": "Small and short screen — tends to expose overflow bugs and buttons pushed off-screen."
+    },
+    {
+      "code": "iphone-5",
+      "name": "iPhone SE gen 1 (320px)",
+      "group": "Phone",
+      "width": 320,
+      "height": 568,
+      "dpr": 2,
+      "mobile": true,
+      "note": "Narrowest size still seen. Used to catch broken layouts."
+    },
+    {
+      "code": "galaxy-s20",
+      "name": "Galaxy S8 / S20",
+      "group": "Phone",
+      "width": 360,
+      "height": 800,
+      "dpr": 3,
+      "mobile": true,
+      "note": "A common Android size."
+    },
+    {
+      "code": "pixel-7",
+      "name": "Pixel 7",
+      "group": "Phone",
+      "width": 412,
+      "height": 915,
+      "dpr": 2.625,
+      "mobile": true
+    },
+    {
+      "code": "iphone-14-max",
+      "name": "iPhone 14 Pro Max",
+      "group": "Phone",
+      "width": 430,
+      "height": 932,
+      "dpr": 3,
+      "mobile": true,
+      "note": "Widest phone — checks for content stretched awkwardly."
+    },
+    {
+      "code": "ipad-mini",
+      "name": "iPad mini",
+      "group": "Tablet",
+      "width": 768,
+      "height": 1024,
+      "dpr": 2,
+      "mobile": true
+    },
+    {
+      "code": "desktop-1280",
+      "name": "Desktop 1280×800",
+      "group": "Desktop",
+      "width": 1280,
+      "height": 800,
+      "dpr": 1,
+      "mobile": false
+    },
+    {
+      "code": "desktop-1440",
+      "name": "Desktop 1440×900",
+      "group": "Desktop",
+      "width": 1440,
+      "height": 900,
+      "dpr": 1,
+      "mobile": false,
+      "note": "Default size for keyword test cases."
+    },
+    {
+      "code": "desktop-1920",
+      "name": "Desktop 1920×1080",
+      "group": "Desktop",
+      "width": 1920,
+      "height": 1080,
+      "dpr": 1,
+      "mobile": false
+    }
+  ]
+}

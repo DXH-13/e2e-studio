@@ -1,0 +1,26 @@
+{
+  "id": "open-home-page",
+  "folder": "Smoke",
+  "name": "Mở trang chủ",
+  "partner": "demo",
+  "dataApp": "keyword",
+  "tcIds": [],
+  "tags": ["demo"],
+  "steps": [
+    {
+      "name": "",
+      "phase": "setup",
+      "keywords": [{ "keyword": "openBrowser", "args": { "url": "http://127.0.0.1:5077/demo/index.html" } }]
+    },
+    {
+      "name": "",
+      "phase": "main",
+      "keywords": [{ "keyword": "verifyText", "args": { "text": "Welcome to the demo app" } }]
+    },
+    {
+      "name": "Kết thúc",
+      "phase": "teardown",
+      "keywords": [{ "keyword": "screenshot", "args": { "name": "ket-thuc" } }]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "_doc": "Danh mục project. Mỗi project là một khối trong `partners`, có một bộ test keyword (test case không cần code ở testcases/<code>/). Project tạo từ console được thêm vào đây tự động.",
+  "sharedEnvKeys": [],
+  "partners": [
+    {
+      "code": "demo",
+      "name": "Demo",
+      "bridge": "none",
+      "suites": [
+        {
+          "app": "keyword",
+          "kind": "browser",
+          "label": "No-code test cases (keyword)",
+          "baseUrlKey": "DEMO_URL",
+          "testMatch": ["shared/keyword/runner.spec.ts"],
+          "mocked": false,
+          "writes": false,
+          "ready": true,
+          "note": "Runs the keyword test cases of the demo project (testcases/demo/**).",
+          "category": "e2e"
+        }
+      ],
+      "envKeys": []
+    }
+  ]
+}

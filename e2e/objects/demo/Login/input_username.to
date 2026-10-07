@@ -1,0 +1,14 @@
+{
+  "name": "Username",
+  "method": "css",
+  "properties": [
+    { "name": "tag", "condition": "equals", "value": "input", "detect": true },
+    { "name": "id", "condition": "equals", "value": "username", "detect": true }
+  ],
+  "xpaths": [{ "type": "xpath:attributes", "value": "//input[@id='username']" }],
+  "selectedXPath": 0,
+  "css": "#username",
+  "role": null,
+  "kind": "input",
+  "screen": "Login"
+}

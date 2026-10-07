@@ -1,0 +1,102 @@
+{
+  "id": "login-success",
+  "folder": "Smoke",
+  "name": "Đăng nhập thành công",
+  "partner": "demo",
+  "dataApp": "keyword",
+  "tcIds": [],
+  "tags": [
+    "demo"
+  ],
+  "variables": [
+    {
+      "name": "username",
+      "value": "tomsmith"
+    },
+    {
+      "name": "password",
+      "value": "SuperSecretPassword!"
+    }
+  ],
+  "steps": [
+    {
+      "name": "",
+      "phase": "setup",
+      "keywords": [
+        {
+          "keyword": "openBrowser",
+          "args": {
+            "url": "http://127.0.0.1:5077/demo/login.html"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Nhập tài khoản",
+      "phase": "main",
+      "keywords": [
+        {
+          "keyword": "sendKeys",
+          "object": "Login/input_username",
+          "args": {
+            "keys": "${var:username}"
+          }
+        },
+        {
+          "keyword": "sendKeys",
+          "object": "Login/input_password",
+          "args": {
+            "keys": "${var:password}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "",
+      "phase": "main",
+      "keywords": [
+        {
+          "keyword": "click",
+          "object": "Login/btn_login"
+        }
+      ]
+    },
+    {
+      "name": "",
+      "phase": "main",
+      "keywords": [
+        {
+          "keyword": "verifyText",
+          "args": {
+            "text": "You logged into a secure area!"
+          }
+        }
+      ]
+    },
+    {
+      "name": "",
+      "phase": "main",
+      "keywords": [
+        {
+          "keyword": "verifyUrl",
+          "args": {
+            "contains": "/demo/secure.html"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Kết thúc",
+      "phase": "teardown",
+      "keywords": [
+        {
+          "keyword": "screenshot",
+          "args": {
+            "name": "ket-thuc"
+          }
+        }
+      ]
+    }
+  ],
+  "updatedAt": "2026-10-07T01:35:15.282Z"
+}

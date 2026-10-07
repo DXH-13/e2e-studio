@@ -1,0 +1,11 @@
+{
+  "_doc": "Console chỉ dùng một mã nội bộ \"local\" cho runKey / báo cáo / lịch. URL và secret khai ở Global variables của project; chạy trên máy chủ khác thì test suite chọn dòng test data.",
+  "environments": [
+    {
+      "code": "local",
+      "name": "Local",
+      "readOnly": false,
+      "description": "The machine running the console."
+    }
+  ]
+}
