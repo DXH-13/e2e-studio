@@ -124,6 +124,7 @@ const VI = {
   Result: 'Kết quả',
   Updated: 'Cập nhật',
   Started: 'Bắt đầu',
+  'What ran': 'Nội dung chạy',
   Duration: 'Thời lượng',
   Trigger: 'Kích hoạt',
   Time: 'Thời gian',

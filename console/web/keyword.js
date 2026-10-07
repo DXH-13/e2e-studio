@@ -1612,8 +1612,8 @@ function renderStepTable(tc, k) {
         <thead>
           <tr>
             <th class="kw-cell-handle"></th>
-            <th style="width:30%">Step</th>
-            <th style="width:16%">Test object</th>
+            <th style="width:34%">Step</th>
+            <th style="width:18%">Test object</th>
             <th>Data input</th>
             <th style="width:10%">Output</th>
             <th class="kw-cell-actions"></th>
@@ -1693,8 +1693,8 @@ function renderStepRow(no, si, ci, call, step, folded, single = false) {
       <td class="kw-cell-handle">${handle(`data-drag-call="${ref}"`)}</td>
       <td class="kw-cell-step"><div class="kw-step-title"><span class="kw-run-ico" data-run-ico="${single ? si : ref}"></span><span class="kw-row-no">${no}</span>${keywordIcon(spec)}<input type="text" class="kw-step-name kw-call-name" ${nameAttr} value="${esc(name ?? '')}" size="${nameSize(name || spec?.label || call.keyword)}"
              placeholder="${esc(spec?.label ?? call.keyword)}" spellcheck="false" autocomplete="off" data-no-i18n
-             aria-label="Step name" title="Name of this step — empty = keyword name" /></div></td>
-      <td>${call.object ? `<span class="kw-obj">${esc(call.object)}</span>` : ''}</td>
+             aria-label="Step name" title="${esc(name ? `${name} (${spec?.label ?? call.keyword})` : (spec?.label ?? call.keyword))} — empty name = keyword name" /></div></td>
+      <td${call.object ? ` title="${esc(call.object)}"` : ''}>${call.object ? `<span class="kw-obj">${esc(call.object)}</span>` : ''}</td>
       <td class="kw-cell-input" title="${esc(args.map(([name, v]) => `${name} = ${v}`).join(', '))}">${args.map(([name, v]) => `<span class="kw-arg"><span class="kw-arg-name">${esc(name)}</span> = ${highlightVars(v)}</span>`).join('')}</td>
       <td>${call.output ? `<span class="kw-output" title="Read later as \${var:${esc(call.output)}}">${esc(call.output)}</span>` : ''}</td>
       <td class="kw-cell-actions">

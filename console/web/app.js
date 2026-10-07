@@ -626,14 +626,19 @@ async function renderResults() {
         <tr data-run-row="${esc(run.id)}" class="${selectedRuns.has(run.id) ? 'is-selected' : ''}">
           <td class="col-check"><input type="checkbox" data-run-check="${esc(run.id)}" ${selectedRuns.has(run.id) ? 'checked' : ''} aria-label="Select" /></td>
           <td>
-            <strong>${esc(run.suiteLabel ?? run.app)}</strong> ${categoryChip(categoryOf(run.partner, run.app))}
-            <div class="combo-sub">${esc(run.partnerName ?? run.partner)}${run.grep ? ` · filter: <code>${esc(run.grep)}</code>` : ''}${run.device ? ` · ${esc(deviceLabel(run.device))}` : ''}${run.headed ? ' · headed' : ''}</div>
+            ${
+              // Lượt chạy theo bộ lọc (thường là một test case) lấy chính bộ lọc làm nhãn chính — tên bộ test giống
+              // nhau ở mọi dòng nên không phân biệt được lượt nào với lượt nào; tên bộ xuống dòng phụ.
+              run.grep
+                ? `<strong data-no-i18n>${esc(run.grep)}</strong> ${categoryChip(categoryOf(run.partner, run.app))}
+                   <div class="combo-sub">${esc(run.suiteLabel ?? run.app)} · ${esc(run.partnerName ?? run.partner)}`
+                : `<strong>${esc(run.suiteLabel ?? run.app)}</strong> ${categoryChip(categoryOf(run.partner, run.app))}
+                   <div class="combo-sub">${esc(run.partnerName ?? run.partner)}`
+            }${run.device ? ` · ${esc(deviceLabel(run.device))}` : ''}${run.headed ? ' · headed' : ''}</div>
           </td>
           <td>${runChip(run)}</td>
           <td class="cell-dim">${esc(totalsText(run) || '—')}</td>
-          <td class="cell-dim">${esc(fmtTime(run.startedAt))}<div class="combo-sub">${esc(fmtAgo(run.startedAt))}</div></td>
-          <td class="cell-dim">${esc(fmtDuration(run.durationMs))}</td>
-          <td class="cell-dim">${run.trigger === 'schedule' ? 'schedule' : 'manual'}</td>
+          <td class="cell-dim cell-nowrap">${esc(fmtTime(run.startedAt))}<div class="combo-sub">${esc(fmtAgo(run.startedAt))} ·${esc(fmtDuration(run.durationMs))} · ${run.trigger === 'schedule' ? 'schedule' : 'manual'}</div></td>
           <td>
             <div class="row-actions">
               <div class="btn-group">
@@ -658,8 +663,8 @@ async function renderResults() {
     .join('');
 
   const emptyCell = runsFilterActive()
-    ? '<tr><td colspan="8" class="empty"><strong>No runs match the filter</strong>Loosen the filter, or click “Clear filter”.</td></tr>'
-    : `<tr><td colspan="8" class="empty"><strong>No runs yet</strong>Click “Run…” to start one.</td></tr>`;
+    ? '<tr><td colspan="6" class="empty"><strong>No runs match the filter</strong>Loosen the filter, or click “Clear filter”.</td></tr>'
+    : `<tr><td colspan="6" class="empty"><strong>No runs yet</strong>Click “Run…” to start one.</td></tr>`;
 
   // Chỉ một nhóm thì không cần lọc theo nhóm.
   const typeFilter = CATEGORY_ORDER.length < 2 ? '' : `<div class="field">
@@ -741,9 +746,9 @@ async function renderResults() {
         <span class="tools-right">${runsFilterActive() ? '<button class="btn btn-sm btn-ghost" id="r-reset">Clear filter</button>' : ''}</span>
       </div>
       <div class="table-wrap">
-        <table>
+        <table class="table-runs">
           <thead>
-            <tr><th class="col-check"><input type="checkbox" id="check-all-runs" aria-label="Select all" /></th><th>Suite</th><th style="width:110px">Result</th><th style="width:160px">Numbers</th><th style="width:180px">Started</th><th style="width:110px">Duration</th><th style="width:100px">Trigger</th><th style="width:290px"></th></tr>
+            <tr><th class="col-check"><input type="checkbox" id="check-all-runs" aria-label="Select all" /></th><th>What ran</th><th style="width:110px">Result</th><th style="width:150px">Numbers</th><th style="width:190px">Started</th><th style="width:210px"></th></tr>
           </thead>
           <tbody>${rows || emptyCell}</tbody>
         </table>

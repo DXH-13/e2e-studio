@@ -5,7 +5,7 @@
  * Nguyên tắc khi sửa file này:
  *   · Độ nổi (elevation) dành riêng cho lớp nổi — drawer, toast, tooltip.
  *     Thẻ nằm trong trang chỉ dùng viền mảnh, không đổ bóng, để trang phẳng và sạch.
- *   · Accent là màu TRUNG TÍNH (đen ở nền sáng, trắng ở nền tối) và chỉ dùng cho
+ *   · Accent là xanh dương (#2563eb sáng / #60a5fa tối) và chỉ dùng cho
  *     ĐIỀU HƯỚNG + HÀNH ĐỘNG CHÍNH. Trạng thái đạt/lỗi/cảnh báo mới có màu sắc —
  *     nhờ vậy chỗ nào có màu là chỗ đó mang nghĩa, không phải trang trí.
  *   · Mọi màu ở đây đã kiểm bằng máy (tương phản WCAG, và với màu biểu đồ thì
@@ -40,7 +40,7 @@
   --text-dim: light-dark(#334155, #c9d3e0);
   --text-faint: light-dark(#526078, #9aa8bd);
 
-  /* Accent — điều hướng + hành động chính. Trung tính: đen trên nền sáng, trắng trên nền tối. */
+  /* Accent — điều hướng + hành động chính. Xanh dương, không dùng để trang trí. */
   --accent: light-dark(#2563eb, #60a5fa); /* nền nút, thanh gạt, vệt menu đang chọn */
   --accent-ink: light-dark(#1d4ed8, #93c5fd); /* accent dùng làm CHỮ */
   --accent-soft: light-dark(#dbe7ff, #1e2d4d);
@@ -726,6 +726,17 @@ body {
 
 .table-wrap {
   overflow-x: auto;
+}
+
+/* Bảng kết quả: các cột cố định chiếm ~700px, cột "What ran" phải còn ≥ 260px — hẹp hơn thì cuộn ngang,
+   không bóp tên test case xuống từng chữ một dòng. */
+.table-runs {
+  min-width: 960px;
+}
+
+/* "8 giờ trước · 55.6 giây · thủ công" dài hơn bản tiếng Anh — giữ một dòng để các dòng bảng cao bằng nhau. */
+.table-runs .cell-nowrap {
+  white-space: nowrap;
 }
 
 /*
@@ -3746,7 +3757,7 @@ tr.is-selected td {
 
 .kw-editor-body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 400px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   gap: 20px;
   align-items: start;
 }
@@ -3891,7 +3902,8 @@ tr.is-selected td {
   opacity: 1;
 }
 
-@media (max-width: 1280px) {
+/* Pane chỉ đứng cạnh khi bảng step còn đủ rộng (~950px); hẹp hơn thì xuống dưới bảng, nhường chỗ cho tên step. */
+@media (max-width: 1600px) {
   .kw-editor-body {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -3911,6 +3923,8 @@ tr.is-selected td {
 
 .kw-tbl {
   width: 100%;
+  /* Hẹp hơn mức này thì cột % bóp tên step còn "Send …": cho bảng cuộn ngang (.table-wrap) thay vì cắt chữ. */
+  min-width: 760px;
   border-collapse: collapse;
   table-layout: fixed;
 }

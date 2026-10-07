@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T00:00:00+07:00",
+  "title": "Design System: E2E Studio",
+  "extensions": {
+    "colorMeta": {
+      "accent": { "role": "primary", "displayName": "Bench Blue", "canonical": "light-dark(#2563eb, #60a5fa)", "tonalRamp": ["#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#2563eb", "#60a5fa", "#93c5fd", "#dbeafe"] },
+      "accent-ink": { "role": "primary", "displayName": "Bench Blue Ink", "canonical": "light-dark(#1d4ed8, #93c5fd)" },
+      "accent-soft": { "role": "primary", "displayName": "Blue Wash", "canonical": "light-dark(#dbe7ff, #1e2d4d)" },
+      "bench-bg": { "role": "neutral", "displayName": "Bench Grey", "canonical": "light-dark(#f3f5f9, #0f1420)", "tonalRamp": ["#0f172a", "#1e293b", "#334155", "#475569", "#64748b", "#94a3b8", "#cbd5e1", "#f1f5f9"] },
+      "chrome": { "role": "neutral", "displayName": "Frame Grey", "canonical": "light-dark(#e6eaf1, #090c13)" },
+      "surface": { "role": "neutral", "displayName": "Clean Surface", "canonical": "light-dark(#ffffff, #171e2b)" },
+      "surface-2": { "role": "neutral", "displayName": "Tray Grey 1", "canonical": "light-dark(#e9edf4, #212a3a)" },
+      "surface-3": { "role": "neutral", "displayName": "Tray Grey 2", "canonical": "light-dark(#dde3ec, #2b3648)" },
+      "border": { "role": "neutral", "displayName": "Hairline", "canonical": "light-dark(#dce2eb, #283245)" },
+      "border-strong": { "role": "neutral", "displayName": "Firm Hairline", "canonical": "light-dark(#a9b4c6, #55637f)" },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "light-dark(#0f172a, #f3f6fb)" },
+      "ink-dim": { "role": "neutral", "displayName": "Dim Ink", "canonical": "light-dark(#334155, #c9d3e0)" },
+      "ink-faint": { "role": "neutral", "displayName": "Faint Ink", "canonical": "light-dark(#526078, #9aa8bd)" },
+      "ok": { "role": "status", "displayName": "Pass Green", "canonical": "light-dark(#15803d, #4ade80)", "tonalRamp": ["#052e16", "#14532d", "#166534", "#15803d", "#16a34a", "#4ade80", "#86efac", "#dcfce7"] },
+      "fail": { "role": "status", "displayName": "Fail Red", "canonical": "light-dark(#b91c1c, #f87171)", "tonalRamp": ["#450a0a", "#7f1d1d", "#991b1b", "#b91c1c", "#dc2626", "#f87171", "#fca5a5", "#fee2e2"] },
+      "warn": { "role": "status", "displayName": "Caution Amber", "canonical": "light-dark(#854d0e, #fbbf24)", "tonalRamp": ["#422006", "#713f12", "#854d0e", "#a16207", "#ca8a04", "#fbbf24", "#fde68a", "#fef3c7"] },
+      "info": { "role": "status", "displayName": "Info Blue", "canonical": "light-dark(#1d4ed8, #93c5fd)" }
+    },
+    "typographyMeta": {
+      "headline": { "displayName": "Page title", "purpose": "One per screen, in the page head." },
+      "title": { "displayName": "Card title", "purpose": "Card, modal and drawer headings." },
+      "body": { "displayName": "Body", "purpose": "Default text; descriptions capped at 74ch." },
+      "body-sm": { "displayName": "Body small", "purpose": "Tables, controls, secondary lines." },
+      "label": { "displayName": "Label", "purpose": "Status chips, hints, meta." },
+      "mono": { "displayName": "Mono", "purpose": "Selectors, step targets, logs, IDs." }
+    },
+    "shadows": [
+      { "name": "shadow-sm", "value": "0 1px 2px light-dark(rgba(16,16,20,0.05), rgba(0,0,0,0.45))", "purpose": "Tiny lift for small floating controls." },
+      { "name": "shadow", "value": "0 4px 6px -2px light-dark(rgba(16,16,20,0.06), rgba(0,0,0,0.45)), 0 12px 28px -8px light-dark(rgba(16,16,20,0.14), rgba(0,0,0,0.6))", "purpose": "Modals, drawers, toasts only." },
+      { "name": "ring", "value": "0 0 0 3px light-dark(rgba(37,99,235,0.3), rgba(96,165,250,0.4))", "purpose": "Focus ring for buttons and inputs." }
+    ],
+    "motion": [
+      { "name": "state", "value": "0.12s ease", "purpose": "Hover, focus and border-colour transitions." },
+      { "name": "reduced", "value": "transition: none", "purpose": "Applied under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "xs", "value": "640px" },
+      { "name": "sm", "value": "720px" },
+      { "name": "sm-plus", "value": "760px" },
+      { "name": "md", "value": "900px" },
+      { "name": "lg", "value": "1100px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Button",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Default action: surface fill, firm hairline.",
+      "html": "<button class=\"ds-btn\">Run suite</button>",
+      "css": ".ds-btn { display:inline-flex; align-items:center; gap:6px; min-height:32px; padding:5px 13px; border:1px solid var(--border-strong, #a9b4c6); background:var(--surface, #fff); color:var(--text, #0f172a); border-radius:4px; font:550 13px/1.3 'Segoe UI Variable Text','Segoe UI',system-ui,sans-serif; cursor:pointer; transition:background .12s ease, border-color .12s ease; } .ds-btn:hover { background:var(--surface-2, #e9edf4); border-color:var(--text-faint, #526078); } .ds-btn:active { background:var(--surface-3, #dde3ec); } .ds-btn:focus-visible { outline:none; border-color:var(--accent, #2563eb); box-shadow:0 0 0 3px rgba(37,99,235,.3); }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action on a screen.",
+      "html": "<button class=\"ds-btn-primary\">New test case</button>",
+      "css": ".ds-btn-primary { display:inline-flex; align-items:center; gap:6px; min-height:32px; padding:5px 13px; border:1px solid var(--accent, #2563eb); background:var(--accent, #2563eb); color:var(--accent-on, #fff); border-radius:4px; font:650 13px/1.3 'Segoe UI Variable Text','Segoe UI',system-ui,sans-serif; cursor:pointer; transition:background .12s ease, border-color .12s ease; } .ds-btn-primary:hover { background:var(--accent-hover, #1d4ed8); border-color:var(--accent-hover, #1d4ed8); } .ds-btn-primary:active { background:var(--accent-active, #1e40af); border-color:var(--accent-active, #1e40af); } .ds-btn-primary:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(37,99,235,.3); }"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Destructive action: red outline, red wash on hover.",
+      "html": "<button class=\"ds-btn-danger\">Delete</button>",
+      "css": ".ds-btn-danger { min-height:32px; padding:5px 13px; border:1px solid var(--fail, #b91c1c); background:transparent; color:var(--fail, #b91c1c); border-radius:4px; font:550 13px/1.3 'Segoe UI Variable Text','Segoe UI',system-ui,sans-serif; cursor:pointer; transition:background .12s ease; } .ds-btn-danger:hover { background:var(--fail-soft, #fee2e2); } .ds-btn-danger:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(37,99,235,.3); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Single-line field with blue focus ring.",
+      "html": "<input class=\"ds-input\" placeholder=\"Base URL\" />",
+      "css": ".ds-input { font:400 13.5px/1.4 'Segoe UI Variable Text','Segoe UI',system-ui,sans-serif; min-height:34px; padding:6px 11px; border:1px solid var(--border-strong, #a9b4c6); border-radius:4px; background:var(--surface, #fff); color:var(--text, #0f172a); width:100%; transition:border-color .12s ease, box-shadow .12s ease; } .ds-input::placeholder { color:var(--text-faint, #526078); } .ds-input:hover { border-color:var(--text-faint, #526078); } .ds-input:focus { outline:none; border-color:var(--accent, #2563eb); box-shadow:0 0 0 3px rgba(37,99,235,.3); }"
+    },
+    {
+      "name": "Status Chips",
+      "kind": "chip",
+      "refersTo": "chip-ok",
+      "description": "Pass / fail / warning status pills. The only coloured elements besides the accent.",
+      "html": "<span class=\"ds-chip ds-chip-ok\">Passed</span> <span class=\"ds-chip ds-chip-fail\">Failed</span> <span class=\"ds-chip ds-chip-warn\">Flaky</span>",
+      "css": ".ds-chip { display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:999px; font:620 12px/1.5 'Segoe UI Variable Text','Segoe UI',system-ui,sans-serif; letter-spacing:.005em; } .ds-chip-ok { background:var(--ok-soft, #dcfce7); color:var(--ok, #15803d); } .ds-chip-fail { background:var(--fail-soft, #fee2e2); color:var(--fail, #b91c1c); } .ds-chip-warn { background:var(--warn-soft, #fef3c7); color:var(--warn, #854d0e); }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flat in-page container with hairline and divided head.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-head\">Recent runs</div><div class=\"ds-card-body\">3 suites, 42 steps</div></div>",
+      "css": ".ds-card { background:var(--surface, #fff); border:1px solid var(--border, #dce2eb); border-radius:8px; overflow:hidden; font:400 14px/1.55 'Segoe UI Variable Text','Segoe UI',system-ui,sans-serif; color:var(--text, #0f172a); } .ds-card-head { padding:13px 18px; border-bottom:1px solid var(--border, #dce2eb); font-weight:600; font-size:15px; } .ds-card-body { padding:13px 18px; color:var(--text-dim, #334155); }"
+    },
+    {
+      "name": "Sidebar Nav",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Sidebar items; active item has blue wash and a 3px left marker.",
+      "html": "<nav class=\"ds-nav\"><button class=\"ds-nav-item is-active\">Test cases</button><button class=\"ds-nav-item\">Suites</button><button class=\"ds-nav-item\">Schedules</button></nav>",
+      "css": ".ds-nav { width:220px; padding:8px; background:var(--chrome, #e6eaf1); } .ds-nav-item { position:relative; display:flex; width:100%; border:0; background:transparent; color:var(--text-dim, #334155); font:400 13.5px/1.4 'Segoe UI Variable Text','Segoe UI',system-ui,sans-serif; text-align:left; padding:8px 10px; border-radius:5px; margin-bottom:2px; cursor:pointer; transition:background .12s ease, color .12s ease; } .ds-nav-item:hover { background:var(--surface-2, #e9edf4); color:var(--text, #0f172a); } .ds-nav-item.is-active { background:var(--accent-soft, #dbe7ff); color:var(--accent-ink, #1d4ed8); font-weight:620; } .ds-nav-item.is-active::before { content:''; position:absolute; left:0; top:7px; bottom:7px; width:3px; border-radius:0 3px 3px 0; background:var(--accent, #2563eb); } .ds-nav-item:focus-visible { outline:2px solid var(--accent, #2563eb); outline-offset:2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lab Bench",
+    "overview": "The console is a clean laboratory bench. Instruments sit where the hand expects them, surfaces are neutral and matte, and nothing on the bench is coloured unless it is a reading. A test run is an experiment: the UI's job is to set it up precisely and then report what happened without embellishment. Colour is reserved for results (pass, fail, warning) and for the single blue that marks where you are and what you can do next.\n\nDensity is moderate-to-high, tuned for people who spend a working day in the tool: 14px body, compact 32px controls, thin 1px borders instead of shadows. The application frame (title bar, sidebar, tab strip) sits one tone darker than the work area, IDE-style, so the regions separate without lines shouting. Everything runs offline, so typography uses system fonts only; no web fonts, no CDN.\n\nBoth light and dark themes are first-class. Every colour token is declared once as a `light-dark()` pair so the two modes are always edited together, and switching mode flips `color-scheme`, which also restyles native selects, date pickers and scrollbars.",
+    "keyCharacteristics": [
+      "Flat, bordered surfaces; elevation only for floating layers.",
+      "One blue accent for navigation and primary action; colour elsewhere means status.",
+      "System sans (Segoe UI Variable first), compact controls, small radii.",
+      "Light/dark parity enforced by `light-dark()` tokens and a machine contrast check.",
+      "Every string bilingual (EN/VI); layouts must hold Vietnamese diacritics and longer labels."
+    ],
+    "rules": [
+      { "name": "The Colour Means Something Rule", "body": "Outside the blue accent, a coloured pixel is a status. If a hue isn't reporting pass, fail, warning or info, it doesn't belong.", "section": "colors" },
+      { "name": "The Machine-Checked Rule", "body": "Colours are chosen by `npm run check:contrast`, not by eye. Any new or changed token must pass in both light and dark before merge.", "section": "colors" },
+      { "name": "The Weight Not Size Rule", "body": "Separate hierarchy with weight steps first. Only the page title breaks 16px.", "section": "typography" },
+      { "name": "The No Web Fonts Rule", "body": "The console must render offline; never add a font file or font CDN.", "section": "typography" },
+      { "name": "The On-The-Bench Rule", "body": "If it lives in the page, it gets a border, not a shadow. Only things lifted off the bench cast one.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** declare every new colour token once as `light-dark(light, dark)` in `:root` of `console/web/styles.css`.",
+      "**Do** run `npm run check:contrast` after any colour change.",
+      "**Do** keep in-page containers flat with a 1px hairline.",
+      "**Do** reserve blue for navigation, primary actions and focus.",
+      "**Do** keep transitions short (≈0.12s ease) and honour `prefers-reduced-motion`.",
+      "**Do** check layouts with Vietnamese strings, which run longer than English."
+    ],
+    "donts": [
+      "**Don't** add shadows to cards, tables or panels that sit in the page.",
+      "**Don't** use colour decoratively; a coloured element must report a status.",
+      "**Don't** add web fonts, icon fonts, CSS frameworks or CDN assets; the console must work offline.",
+      "**Don't** darken/lighten buttons with `filter: brightness`; use the explicit hover/active tokens.",
+      "**Don't** introduce a second accent hue."
+    ]
+  }
+}
