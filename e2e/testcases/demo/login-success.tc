@@ -1,0 +1,48 @@
+{
+  "id": "login-success",
+  "folder": "",
+  "name": "Đăng nhập thành công",
+  "partner": "demo",
+  "dataApp": "keyword",
+  "tcIds": [],
+  "tags": [
+    "demo"
+  ],
+  "variables": [
+    {
+      "name": "username",
+      "value": "tomsmith"
+    },
+    {
+      "name": "password",
+      "value": "SuperSecretPassword!"
+    }
+  ],
+  "steps": [
+    {
+      "name": "Open Browser",
+      "phase": "setup",
+      "keywords": [
+        {
+          "keyword": "openBrowser",
+          "args": {
+            "url": "https://www.youtube.com/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Kết thúc",
+      "phase": "teardown",
+      "keywords": [
+        {
+          "keyword": "screenshot",
+          "args": {
+            "name": "ket-thuc"
+          }
+        }
+      ]
+    }
+  ],
+  "updatedAt": "2026-11-09T02:46:09.368Z"
+}
